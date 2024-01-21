@@ -1,0 +1,13 @@
+.transcript-info {
+    width: 100%;
+    position: relative;
+    padding-left: 10px;
+    padding-right: $padding-md;
+}
+
+.transcript-delete-button {
+    display: none;
+    position: absolute;
+    top: $padding-md;
+    right: $padding-md;
+}

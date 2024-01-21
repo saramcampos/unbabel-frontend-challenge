@@ -1,0 +1,10 @@
+@mixin element-icon($icon-height, $icon-width, $icon-name) {
+    &:before {
+        content: ''; 
+        height: $icon-height;
+        width: $icon-width; 
+        background-image: url('../../../../assets/' + $icon-name);
+        background-repeat: no-repeat;
+        background-position: center;
+    } 
+}

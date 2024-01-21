@@ -1,0 +1,24 @@
+.transcript {
+
+    &-container {
+        max-width: $screen-lg;
+        margin: 2rem auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &-card {
+        display: flex;
+        align-items: start;
+        width: 100%;
+        box-sizing: border-box; 
+        background-color: $color-white;
+        padding: $padding-md;
+        border: 1px solid $color-grey-extra-light;
+    
+        &:hover .transcript-delete-button {
+            display: flex;
+        }
+    }
+}

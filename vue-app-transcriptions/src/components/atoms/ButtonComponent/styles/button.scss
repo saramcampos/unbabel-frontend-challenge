@@ -1,0 +1,36 @@
+.button-icon {
+    &-trash {
+        @include element-icon(
+            $icon-height: 20px,
+            $icon-width: 16px,
+            $icon-name: 'delete.svg'
+        );     
+    }
+
+    &-add {
+        display: inline-flex;
+        @include element-icon(
+            $icon-height: 35px,
+            $icon-width: 35px,
+            $icon-name: 'add-row.svg'
+        );     
+    }
+
+    &-upload {
+        display: inline-flex;
+        @include element-icon(
+            $icon-height: 20px,
+            $icon-width: 20px,
+            $icon-name: 'upload.svg'
+        );     
+    }
+
+    &-get {
+        display: inline-flex;
+        @include element-icon(
+            $icon-height: 20px,
+            $icon-width: 20px,
+            $icon-name: 'fetch-document.svg'
+        );     
+    }
+}

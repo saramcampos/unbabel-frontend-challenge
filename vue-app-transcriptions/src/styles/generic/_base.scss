@@ -1,0 +1,44 @@
+#app {
+  position: relative;
+  height: 100%; 
+}
+  
+html {
+  overflow-x: hidden;
+}
+
+body {
+  background-color: $color-grey-extra-light;
+  min-height: 100vh;  
+  line-height: 1.6;
+  font-family: "Open sans", sans-serif;
+  font-size: $font-size-base-md;
+  color: $color-grey-light;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  position: relative;
+}
+
+header {
+  background-color: $color-white;
+  height: 75px;
+  border-bottom: 3px solid $color-grey-light-transparent;
+}
+
+h1 {
+  font-family: $font-family-montserrat;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-h1;
+  color: $color-grey-medium;
+}
+
+button {
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
