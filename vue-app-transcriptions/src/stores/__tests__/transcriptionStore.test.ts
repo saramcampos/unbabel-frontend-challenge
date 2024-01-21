@@ -37,7 +37,7 @@ describe('Use transcript store', () => {
         }
         store.transcriptsList = [newRow]
 
-        mock.onPost('/', {"voice":"new voice","text":"new text"}).reply(200, [])
+        mock.onPost('/', [{"voice":"new voice","text":"new text"}]).reply(200, [])
         store.postTranscript()
    
         expect(mock.history.post.length).toBe(1)       

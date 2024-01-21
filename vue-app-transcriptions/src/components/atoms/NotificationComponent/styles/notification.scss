@@ -1,0 +1,33 @@
+.notification {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 999;
+  
+    .notification-content {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      min-width: 300px;
+      color: $color-white;
+    }
+  
+    .error {
+      .notification-content {
+        background-color: $color-red;
+      }
+    }
+  
+    .success {
+      .notification-content {
+        background-color: $color-green;
+      }
+    }
+    
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
+}

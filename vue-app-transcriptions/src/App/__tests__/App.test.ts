@@ -1,10 +1,11 @@
 import myComponent from '../App.vue'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { VueWrapper, mount  } from '@vue/test-utils'
-import axios from "axios"
-import MockAdapter from 'axios-mock-adapter'
+import { VueWrapper, flushPromises, mount  } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import { createTestingPinia } from '@pinia/testing'
+import axios from "axios"
+import MockAdapter from 'axios-mock-adapter'
 
 async function testFunction() {
     try {
@@ -31,10 +32,27 @@ describe('App', () => {
 
     afterEach(() => {
         mock.restore()
+        vi.restoreAllMocks()
     })
 
     it('Expect loader to be visible', async () => {  
-        wrapper = mount(myComponent)      
+        wrapper = mount(myComponent, {
+            global: {
+                plugins: [
+                    createTestingPinia({
+                        initialState: {
+                          notification: {
+                            notificationsList: []
+                          }
+                        }, 
+                        stubActions: false, 
+                        createSpy: vi.fn,
+                    })
+                ]
+            }
+        })      
+
+        await flushPromises()
         wrapper.vm.setLoading(true)
 
         await nextTick() 
@@ -48,7 +66,21 @@ describe('App', () => {
             replace
         }))
 
-        wrapper = mount(myComponent)
+        wrapper = mount(myComponent, {
+            global: {
+                plugins: [
+                    createTestingPinia({
+                        initialState: {
+                          notification: {
+                            notificationsList: []
+                          }
+                        }, 
+                        stubActions: false, 
+                        createSpy: vi.fn,
+                    })
+                ]
+            }
+        })
         mock.onGet('/test').reply(400);
 
         await testFunction()

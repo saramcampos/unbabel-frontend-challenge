@@ -6,16 +6,21 @@
       <img alt="spinner loader" class="loader-image" src="../assets/loader.gif" />
     </div>
   </transition> 
+
+  <notification-component :notification-list="notificationStore.notificationsList" @updateNotifications="notificationStore.delete" />
   
 </template>
 
 <script setup lang="ts">
-import { RouterView, useRouter } from 'vue-router'
-import axios from 'axios'
 import { onMounted, ref } from 'vue'
+import { RouterView, useRouter } from 'vue-router'
+import { useNotificationStore } from '@/stores/notificationStore'
+import NotificationComponent from '@/components/atoms/NotificationComponent/NotificationComponent.vue'
+import axios from 'axios'
 
 let loadingCount = ref<number>(0)
 let isLoadingEnabled = ref(false)
+const notificationStore = useNotificationStore()
 let router = useRouter()
 
 function setLoading(isLoading: boolean) {

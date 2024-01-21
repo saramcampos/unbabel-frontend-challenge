@@ -1,12 +1,13 @@
+import type { NotificationDto } from '@/dtos/NotificationDto'
 import { defineStore } from 'pinia'
 let notificationId = 1
 
 export const useNotificationStore = defineStore('notification', {
   state: () => {
-    return { notificationsList: [] }
+    return { notificationsList: [] as Array<NotificationDto> }
   },
   actions: {
-    add(notification: {id?: number, type: string, message?: string}) {
+    add(notification: NotificationDto) {
         notificationId += 1
         notification.id = notificationId
 
@@ -22,7 +23,7 @@ export const useNotificationStore = defineStore('notification', {
 
         this.notificationsList.push(notification)
     },
-    delete(notificationToRemove: { id: number}) {
+    delete(notificationToRemove: NotificationDto) {
         this.notificationsList = this.notificationsList.filter(
             toastNotification => toastNotification.id !== notificationToRemove.id
         )

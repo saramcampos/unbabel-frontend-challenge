@@ -17,7 +17,7 @@ let route = useRoute()
 let statusMessage = ref('Page not found')
 
 let getStatusCode = computed(() => {
-    return route.params.responseCode || route.query.responseCode
+    return route?.params?.responseCode || route?.query?.responseCode
 })
 
 const displayErrorTitle = computed(() => {

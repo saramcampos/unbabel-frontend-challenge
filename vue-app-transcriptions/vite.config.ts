@@ -19,5 +19,5 @@ export default defineConfig({
          additionalData: `@import "@/styles/__main.scss";` 
       },
     },
-  },
+  }
 })

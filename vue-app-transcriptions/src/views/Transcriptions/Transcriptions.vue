@@ -15,11 +15,11 @@
 // Components
 import TranscriptItem from '@/components/molecules/TranscriptItem/TranscriptItem.vue'
 import HeaderComponent from '@/components/atoms/HeaderComponent/HeaderComponent.vue'
-import ButtonComponent from '@/components/atoms/ButtonComponent/ButtonComponent.vue';
+import ButtonComponent from '@/components/atoms/ButtonComponent/ButtonComponent.vue'
 
 // Stores
-import { useTranscriptStore } from '@/stores/transcriptionStore';
-import { computed } from 'vue';
+import { useTranscriptStore } from '@/stores/transcriptionStore'
+import { computed } from 'vue'
 //#endregion
 
 const transcriptStore = useTranscriptStore()

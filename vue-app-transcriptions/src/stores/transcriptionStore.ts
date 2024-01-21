@@ -2,6 +2,7 @@ import type { TranscriptDto } from '@/dtos/TranscriptDto'
 import { defineStore } from 'pinia'
 import { getItems, postItem } from '@/api/Client'
 import { sanitizeToJson } from '@/utils/sanitizeHelper'
+import { useNotificationStore } from './notificationStore'
 
 export const useTranscriptStore = defineStore('transcript', {
     state: () => {
@@ -9,8 +10,17 @@ export const useTranscriptStore = defineStore('transcript', {
           transcriptsList: [] as Array<TranscriptDto>
         } 
     },
+    getters: {
+      getTranscripts: (state) => state.transcriptsList
+    },
     actions: {
       async fetchTranscript() {
+        const notificationStore = useNotificationStore()
+        if (this.transcriptsList.some(transcript => !transcript.id)) {
+          notificationStore.getNotification('error', 'Please save or delete new data first')
+          return
+        }
+
         try {
           const response = await getItems(import.meta.env.VITE_APP_TRANSCRIPTIONS_API_URL, false)
           if (!response?.length) return
@@ -21,13 +31,16 @@ export const useTranscriptStore = defineStore('transcript', {
         }
       },
       async postTranscript() {
+        const notificationStore = useNotificationStore()
         // If any transcription has an error message return
-        const hasErros = this.transcriptsList.some(transcript => {
-          this.validateTranscripts(transcript);
-          return transcript.errorMessage;
+        this.transcriptsList.forEach(transcript => {
+          this.validateTranscripts(transcript)
         })
 
-        if(hasErros) return
+        if (this.transcriptsList.some(transcript => transcript.errorMessage)) {
+          notificationStore.getNotification('error', 'Please fill in all required fields')
+          return;
+        }
 
         // Check if there are new rows to add and map them 
         let transcriptToPost = this.transcriptsList.
@@ -46,12 +59,14 @@ export const useTranscriptStore = defineStore('transcript', {
           if (!response?.length) return
           const sanitizedResponse = sanitizeToJson(response)
           this.transcriptsList = JSON.parse(sanitizedResponse)
+
+          notificationStore.getNotification('success', 'You have successfully posted the transcriptions')
         } catch (error) {
           console.error('Something went wrong while posting transcripts', error)
         }
       },
-      removeTranscript(index: number) {
-        this.transcriptsList.splice(index, 1)
+      removeTranscript(indexToRemove: number) {
+        this.transcriptsList = this.transcriptsList.filter((_, index) => index !== indexToRemove);
       },
       addTranscript() {
         const emptyRow = {
@@ -66,6 +81,9 @@ export const useTranscriptStore = defineStore('transcript', {
         } else {
             transcript.errorMessage = ''
         }
+      },
+      updateTranscript(index: number, value: string, property: string) {
+        this.transcriptsList[index][property] = value
       }
     }
 })

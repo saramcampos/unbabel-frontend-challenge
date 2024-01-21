@@ -3,14 +3,16 @@
     <img class="ml-1" alt="user" src="../../../assets/person.svg"/>
     <div class="transcript-info">
         <input-component
-            v-model="transcriptVoice"
+            :model-value="transcript.voice"
+            @update:modelValue="updateVoice"
             input-class="input-invisible input-title"
             placeholder-text="Please insert voice id here..."
             :errorMessage="transcript.errorMessage"
         />
 
         <text-area-input
-            v-model="transcriptText"
+            :model-value="transcript.text"
+            @update:modelValue="updateText"
             text-area-class="text-area-invisible mt-1"
             placeholder-text="Please insert text here..."
         />
@@ -19,7 +21,6 @@
 </template>
 <script setup lang="ts">
 //#region Imports
-import { ref, watch } from 'vue'
 import { useTranscriptStore } from '@/stores/transcriptionStore'
 
 // Dtos
@@ -38,16 +39,16 @@ const props = defineProps<{
 }>()
   
 const transcriptStore = useTranscriptStore()
-let transcriptVoice = ref(props.transcript.voice)
-let transcriptText = ref(props.transcript.text)
 
-watch(() => transcriptVoice.value, (newValue) => {
-    transcriptStore.transcriptsList[props.index].voice = newValue
+function updateVoice(newValue: string) {
+    transcriptStore.updateTranscript(props.index, newValue, 'voice');
     transcriptStore.validateTranscripts(props.transcript)
-})
+}
 
-watch(() => transcriptText.value, (newValue) => {
-    transcriptStore.transcriptsList[props.index].text = newValue
-})
+function updateText(newValue: string) {
+    transcriptStore.updateTranscript(props.index, newValue, 'text');
+}
+
+
 </script>
 <style src="./styles/transcript-item.scss"></style>
